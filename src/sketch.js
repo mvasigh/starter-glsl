@@ -10,6 +10,16 @@ const HEIGHT = 800;
 
 let shader;
 
+function setUniforms(p, _shader) {
+  const uniforms = {
+    time: p.frameCount * 0.01,
+  };
+
+  for (let [prop, value] of Object.entries(uniforms)) {
+    _shader.setUniform("u_" + prop, value);
+  }
+}
+
 /** @type {P5Handler} */
 function preload(p) {
   shader = p.loadShader(vertexFile, fragmentFile);
@@ -20,19 +30,15 @@ function setup(p) {
   p.createCanvas(WIDTH, HEIGHT, p.WEBGL);
 
   p.shader(shader);
+  setUniforms(p, shader);
 }
 
 /** @type {P5Handler} */
 function draw(p) {
-  p.shader(shader)
-  p.quad(-1, -1, 1, -1, 1, 1, -1, 1)
+  p.shader(shader);
+  setUniforms(p, shader);
 
-  p.stroke(255);
-  p.noFill();
-  p.strokeWeight(1);
-  p.circle(0, 0, 200);
-  p.circle(0, 0, 180);
-  p.circle(0, 0, 160);
+  p.quad(-1, -1, 1, -1, 1, 1, -1, 1);
 }
 
 export default mount({ preload, setup, draw });
