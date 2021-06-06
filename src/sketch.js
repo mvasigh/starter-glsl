@@ -14,6 +14,7 @@ function setUniforms(p, _shader) {
   const uniforms = {
     time: p.frameCount * 0.01,
     resolution: [WIDTH, HEIGHT],
+    mouse: [p.mouseX, p.mouseY],
   };
 
   for (let [prop, value] of Object.entries(uniforms)) {
